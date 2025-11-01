@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Elgendy Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background-color: #f3f3f3;
+      font-family: "Tahoma", sans-serif;
+      text-align: center;
+      direction: rtl;
+      padding: 30px 10px;
+      position: relative;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 12px;
+    }
+    .logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 15px;
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    .social-icons a img {
+      width: 28px;
+      height: 28px;
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+    .social-icons a img:hover {
+      opacity: 1;
+    }
+    /* بطاقات الروابط */
+    .card {
+      background: #fff;
+      margin: 10px auto;
+      padding: 12px 18px;
+      border-radius: 14px;
+      width: 90%;
+      max-width: 350px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      text-align: right;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .card img {
+      width: 28px;
+      height: 28px;
+    }
+    a {
+      text-decoration: none;
+      color: #007aff;
+      font-weight: bold;
+      font-size: 16px;
+      word-break: break-word;
+    }
+    /* زر المشاركة في أعلى الشمال */
+    .share-button {
+      position: absolute;
+      left: 18px;
+      top: 20px;
+    }
+    .share-button img {
+      width: 28px;
+      height: 28px;
+      opacity: 0.85;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+    .share-button img:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- زر المشاركة -->
+  <div class="share-button">
+    <a href="javascript:navigator.share && navigator.share({title: 'Elgendy Store', url: window.location.href});" title="مشاركة الصفحة">
+      <img src="https://cdn-icons-png.flaticon.com/512/929/929610.png" alt="Share" />
+    </a>
+  </div>
+
+  <!-- لوجو الكتاب -->
+  <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png" alt="Book Logo" class="logo" />
+
+  <h1>Elgendy Store</h1>
+
+  <!-- صف الأيقونات الصغيرة -->
+  <div class="social-icons">
+    <a href="https://wa.me/96878945268" target="_blank" title="WhatsApp">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
+    </a>
+    <a href="https://www.facebook.com/share/16DaEzreVn/" target="_blank" title="Facebook">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" />
+    </a>
+    <a href="https://www.instagram.com/killuazoldyck.a555" target="_blank" title="Instagram">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
+    </a>
+    <a href="https://x.com/Killua47277601" target="_blank" title="Twitter (X)">
+      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png" alt="X" />
+    </a>
+    <a href="https://youtube.com/@trokman12709" target="_blank" title="YouTube">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
+    </a>
+    <a href="https://www.snapchat.com/add/xttrokman" target="_blank" title="Snapchat">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Snapchat" />
+    </a>
+    <a href="https://t.me/Trokman2" target="_blank" title="Telegram">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" />
+    </a>
+  </div>
+
+  <!-- مجموعة المستطيلات (بطاقات) -->
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
+    <a href="https://wa.me/96878945268" target="_blank">96878945268+</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" />
+    <a href="https://www.facebook.com/share/16DaEzreVn/" target="_blank">Elgendy Store</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Snapchat" />
+    <a href="https://www.snapchat.com/add/xttrokman" target="_blank">Snapchat</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/6512/6512898.png" alt="Store" />
+    <a href="https://cmh0hmyou04ub01jeg74b878a.wuiltstore.com" target="_blank">متجرنا الإلكتروني</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Menu" />
+    <a href="https://drive.google.com/open?id=10div3p0FdYQbfm2aRMf1F7jmgIJ49bRT&usp=drive_fs" target="_blank">قائمة الخدمات</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Location" />
+    <a href="https://maps.app.goo.gl/rUyZsf9YKWBiQnGz9?g_st=awb" target="_blank"> Location</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" />
+    <a href="https://www.linkedin.com/in/mohamed-ehab-13aa05377" target="_blank">LinkedIn</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png" alt="X" />
+    <a href="https://x.com/Killua47277601" target="_blank">(Twitter (X</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
+    <a href="https://youtube.com/@trokman12709" target="_blank">YouTube</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
+    <a href="https://www.instagram.com/killuazoldyck.a555" target="_blank">Instagram</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" />
+    <a href="https://t.me/Trokman2" target="_blank">Telegram</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
+    <a href="https://www.tiktok.com/@trokman1272009" target="_blank">TikTok</a>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" />
+    <a href="mailto:killuazoldyck1272009@gmail.com" target="_blank">Email</a>
+  </div>
+
+</body>
+</html>
