@@ -1,201 +1,500 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <title>Elgendy Store</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
-      background-color: #f3f3f3;
-      font-family: "Tahoma", sans-serif;
-      text-align: center;
-      direction: rtl;
-      padding: 30px 10px;
-      position: relative;
-      min-height: 100vh;
-      margin: 0;
+    :root{
+      --card-radius:24px;
+      --card-max:420px;
+      --accent:#318146;
+      --shadow: rgba(0,128,0,0.35);
+      --bg:#f3f3f3;
+      --text:#222;
+      --link:#007aff;
     }
-    h1 {
-      color: #333;
-      margin-bottom: 12px;
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"Tahoma",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      padding:28px 12px;
+      direction:rtl;
+      text-align:right;
+      -webkit-font-smoothing:antialiased;
     }
-    .logo {
-      width: 100px;
-      height: auto;
-      margin-bottom: 15px;
+
+    /* Header/logo */
+    .top{
+      display:flex;
+      flex-direction: column; /* تعديل هنا لوضع الاسم تحت اللوجو */
+      align-items:center;
+      justify-content:center;
+      gap:6px; /* فرق أقل عمودي بين اللوجو والاسم */
+      margin-bottom:12px;
+      position:relative;
     }
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 25px;
+    .logo{ width:120px; height:auto; display:block; }
+    h1{ margin:0; font-size:1.8rem; color:#333; }
+
+    /* Share button top-left */
+    .share-button{
+      position:absolute;
+      left:14px; top:6px;
     }
-    .social-icons a img {
-      width: 28px;
-      height: 28px;
-      opacity: 0.85;
-      transition: opacity 0.2s ease;
+    .share-button img{ width:30px; height:30px; opacity:.95; cursor:pointer; }
+
+    /* small social icons row */
+    .social-icons{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      margin:12px 0 22px;
+      flex-wrap:wrap;
     }
-    .social-icons a img:hover {
-      opacity: 1;
+    .social-icons a img{ width:30px; height:30px; opacity:.9; transition:opacity .15s; }
+    .social-icons a img:hover{ opacity:1; }
+
+    /* Cards */
+    .cards{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      align-items:center;
+      padding-bottom:60px;
     }
-    /* بطاقات الروابط */
-    .card {
-      background: #fff;
-      margin: 10px auto;
-      padding: 12px 18px;
-      border-radius: 25px; /* شكل مستطيل بحواف مستديرة أكبر */
-      width: 90%;
-      max-width: 350px;
-      box-shadow: 0 3px 6px rgba(0, 128, 0, 0.4); /* ظل خفيف أخضر */
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      text-align: right;
+    .card{
+      width:92%;
+      max-width:var(--card-max);
+      background:#fff;
+      border-radius:var(--card-radius);
+      padding:16px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      box-shadow:0 6px 14px var(--shadow);
+      transition:transform .15s, box-shadow .15s;
+      text-align:right;
+      overflow:hidden;
+      position:relative;
     }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 128, 0, 0.6); /* ظل أخضر عند المرور */
+    .card:hover{ transform:translateY(-4px); box-shadow:0 12px 26px rgba(0,128,0,0.45); }
+
+    .card .left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex:1;
+      min-width:0;
     }
-    .card img {
-      width: 28px;
-      height: 28px;
+    .card img.icon{ width:40px; height:40px; flex-shrink:0; border-radius:8px; }
+    .card a.card-link{
+      color:var(--link);
+      font-weight:700;
+      font-size:1.05rem;
+      text-decoration:none;
+      word-break:break-word;
+      display:block;
+      min-width:0;
     }
-    a {
-      text-decoration: none;
-      color: #007aff;
-      font-weight: bold;
-      font-size: 16px;
-      word-break: break-word;
+
+    /* ellipsis button */
+    .ellipsis-btn{
+      background:none;
+      border:0;
+      width:42px;
+      height:42px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      margin-left:8px;
+      flex-shrink:0;
     }
-    /* زر المشاركة في أعلى الشمال */
-    .share-button {
-      position: absolute;
-      left: 18px;
-      top: 20px;
+    .ellipsis-icon{
+      display:inline-block;
+      width:4px;
+      height:18px;
+      position:relative;
     }
-    .share-button img {
-      width: 28px;
-      height: 28px;
-      opacity: 0.85;
-      cursor: pointer;
-      transition: opacity 0.2s ease;
+    .ellipsis-icon::before,.ellipsis-icon::after,.ellipsis-icon span{
+      content:"";
+      display:block;
+      width:4px;height:4px;
+      background:#666;border-radius:50%;
+      margin:3px auto;
     }
-    .share-button img:hover {
-      opacity: 1;
+
+    /* Modal */
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.28);
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      padding:20px;
+    }
+    .modal.active{ display:flex; }
+    .modal-content{
+      background:#fff;
+      border-radius:16px;
+      width:100%;
+      max-width:460px;
+      padding:18px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.18);
+      text-align:center;
+      outline:none;
+      transform:translateY(0);
+      animation:pop .18s ease;
+    }
+    @keyframes pop{ from{transform:translateY(6px) scale(.98);opacity:0} to{transform:none;opacity:1} }
+
+    .modal-close{
+      position:absolute;
+      left:14px; top:12px;
+      background:none;border:0;font-size:1.9rem;color:#888;cursor:pointer;
+    }
+    .modal-logo{ width:72px;height:72px;border-radius:12px;margin:6px auto 8px; display:block; }
+    .modal-title{ font-weight:800;color:var(--accent); font-size:1.15rem; margin-bottom:6px; }
+    .modal-link{ font-size:0.95rem; color:#444; margin-bottom:12px; word-break:break-all; }
+
+    .modal-icons-row{
+      display:flex;
+      gap:12px;
+      padding:8px 6px;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      justify-content:flex-start;
+      direction:ltr;
+    }
+    .modal-icon-link{
+      min-width:64px;
+      width:64px;
+      height:64px;
+      border-radius:12px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      text-decoration:none;
+      background:#f6f6f6;
+      color:#111;
+      box-shadow:0 4px 10px rgba(0,150,0,0.06);
+      padding:8px;
+      flex-shrink:0;
+      font-size:0.82rem;
+    }
+    .modal-icon-link img{ width:28px;height:28px; display:block; }
+
+    /* small screens */
+    @media (max-width:480px){
+      .logo{ width:110px; }
+      h1{ font-size:1.35rem; }
+      .card{ padding:14px; border-radius:20px; }
+      .card img.icon{ width:44px;height:44px; }
+      .card a.card-link{ font-size:1rem; }
+      .modal-content{ padding:14px; max-width:95vw; }
+      .modal-logo{ width:64px;height:64px; }
+      .modal-icon-link{ min-width:56px;width:56px;height:56px;font-size:0.78rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- زر المشاركة -->
-  <div class="share-button">
-    <a href="javascript:navigator.share && navigator.share({title: 'Elgendy Store', url: window.location.href});" title="مشاركة الصفحة">
-      <img src="https://cdn-icons-png.flaticon.com/512/929/929610.png" alt="Share" />
-    </a>
+  <!-- Top header -->
+  <div class="top" role="banner">
+    <div class="share-button" title="مشاركة الصفحة">
+      <a href="javascript:if(navigator.share){navigator.share({title:'Elgendy Store',url:location.href})}else{void(0)}">
+        <img src="https://cdn-icons-png.flaticon.com/512/929/929610.png" alt="مشاركة" />
+      </a>
+    </div>
+
+    <img class="logo" src="https://cdn-icons-png.flaticon.com/512/29/29302.png" alt="لوجو Elgendy Store" />
+    <h1>Elgendy Store</h1>
   </div>
 
-  <!-- لوجو الكتاب -->
-  <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png" alt="Book Logo" class="logo" />
-
-  <h1>Elgendy Store</h1>
-
-  <!-- صف الأيقونات الصغيرة -->
-  <div class="social-icons">
-    <a href="https://wa.me/96878945268" target="_blank" title="WhatsApp">
-      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
+  <!-- small social icons -->
+  <div class="social-icons" aria-hidden="false">
+    <a href="https://wa.me/96878945268" target="_blank" rel="noopener">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="واتساب" />
     </a>
-    <a href="https://www.facebook.com/share/16DaEzreVn/" target="_blank" title="Facebook">
-      <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" />
+    <a href="https://www.facebook.com/share/16DaEzreVn/" target="_blank" rel="noopener">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="فيسبوك" />
     </a>
-    <a href="https://www.instagram.com/killuazoldyck.a555" target="_blank" title="Instagram">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
+    <a href="https://www.instagram.com/killuazoldyck.a555" target="_blank" rel="noopener">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="انستجرام" />
     </a>
-    <a href="https://x.com/Killua47277601" target="_blank" title="Twitter (X)">
+    <a href="https://x.com/Killua47277601" target="_blank" rel="noopener">
       <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png" alt="X" />
     </a>
-    <a href="https://youtube.com/@trokman12709" target="_blank" title="YouTube">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
+    <a href="https://youtube.com/@trokman12709" target="_blank" rel="noopener">
+      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="يوتيوب" />
     </a>
-    <a href="https://www.snapchat.com/add/xttrokman" target="_blank" title="Snapchat">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Snapchat" />
-    </a>
-    <a href="https://t.me/Trokman2" target="_blank" title="Telegram">
-      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" />
+    <a href="https://t.me/Trokman2" target="_blank" rel="noopener">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="تيليجرام" />
     </a>
   </div>
 
-  <!-- مجموعة المستطيلات (بطاقات) -->
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
-    <a href="https://wa.me/96878945268" target="_blank">96878945268+</a>
+  <!-- Cards list (ملاحظة: كارت "اتصال مباشر" تم حذفه بناء على طلبك) -->
+  <div class="cards" id="cardsList">
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="واتساب" />
+        <a class="card-link" href="https://wa.me/96878945268" target="_blank" rel="noopener">96878945268+</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="فيسبوك" />
+        <a class="card-link" href="https://www.facebook.com/share/16DaEzreVn/" target="_blank" rel="noopener">Elgendy Store</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="سناب شات" />
+        <a class="card-link" href="https://www.snapchat.com/add/xttrokman" target="_blank" rel="noopener">Snapchat</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/6512/6512898.png" alt="متجر" />
+        <a class="card-link" href="https://cmh0hmyou04ub01jeg74b878a.wuiltstore.com" target="_blank" rel="noopener">المتجر الإلكتروني</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="قائمة الخدمات" />
+        <a class="card-link" href="https://drive.google.com/open?id=10div3p0FdYQbfm2aRMf1F7jmgIJ49bRT&usp=drive_fs" target="_blank" rel="noopener">قائمة الخدمات</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="الموقع" />
+        <a class="card-link" href="https://maps.app.goo.gl/rUyZsf9YKWBiQnGz9?g_st=awb" target="_blank" rel="noopener">الموقع على الخريطة</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="لينكدإن" />
+        <a class="card-link" href="https://www.linkedin.com/in/mohamed-ehab-13aa05377" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png" alt="X" />
+        <a class="card-link" href="https://x.com/Killua47277601" target="_blank" rel="noopener">X</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="يوتيوب" />
+        <a class="card-link" href="https://youtube.com/@trokman12709" target="_blank" rel="noopener">YouTube</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="انستجرام" />
+        <a class="card-link" href="https://www.instagram.com/killuazoldyck.a555" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="تيليجرام" />
+        <a class="card-link" href="https://t.me/Trokman2" target="_blank" rel="noopener">Telegram</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="تيك توك" />
+        <a class="card-link" href="https://www.tiktok.com/@trokman1272009" target="_blank" rel="noopener">TikTok</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
+    <div class="card">
+      <div class="left">
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="ايميل" />
+        <a class="card-link" href="mailto:killuazoldyck1272009@gmail.com" target="_blank" rel="noopener">Email</a>
+      </div>
+      <button class="ellipsis-btn" aria-label="المزيد" title="المزيد"><span class="ellipsis-icon"><span></span></span></button>
+    </div>
+
   </div>
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/597/597177.png" alt="Call" />
-    <a href="tel:+96878945268" target="_blank">اتصال مباشر</a>
+  <!-- Modal -->
+  <div class="modal" id="shareModal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" aria-label="إغلاق">&times;</button>
+      <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png" class="modal-logo" alt="لوجو" />
+      <div id="modalTitle" class="modal-title">Elgendy Store</div>
+      <div id="modalLink" class="modal-link">https://wa.me/96878945268</div>
+
+      <div class="modal-icons-row" id="modalIcons" dir="ltr">
+        <!-- WhatsApp -->
+        <a class="modal-icon-link" href="#" id="m-wa" target="_blank" rel="noopener">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="واتساب" />
+          <span>واتساب</span>
+        </a>
+
+        <!-- Open/Visit -->
+        <a class="modal-icon-link" href="#" id="m-open" target="_blank" rel="noopener">
+          <img src="https://cdn-icons-png.flaticon.com/512/1828/1828925.png" alt="فتح" />
+          <span>فتح</span>
+        </a>
+
+        <!-- X -->
+        <a class="modal-icon-link" href="#" id="m-x" target="_blank" rel="noopener">
+          <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png" alt="X" />
+          <span>X</span>
+        </a>
+
+        <!-- فيسبوك -->
+        <a class="modal-icon-link" href="#" id="m-fb" target="_blank" rel="noopener">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="فيسبوك" />
+          <span>فيسبوك</span>
+        </a>
+
+        <!-- تيليجرام -->
+        <a class="modal-icon-link" href="#" id="m-tg" target="_blank" rel="noopener">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="تيليجرام" />
+          <span>تيليجرام</span>
+        </a>
+
+        <!-- نسخ -->
+        <a class="modal-icon-link" href="#" id="m-copy">
+          <img src="https://cdn-icons-png.flaticon.com/512/60/60740.png" alt="نسخ" />
+          <span>نسخ</span>
+        </a>
+
+        <!-- مشاركة نظامية -->
+        <a class="modal-icon-link" href="#" id="m-share">
+          <img src="https://cdn-icons-png.flaticon.com/512/929/929610.png" alt="مشاركة" />
+          <span>مشاركة</span>
+        </a>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" />
-    <a href="https://www.facebook.com/share/16DaEzreVn/" target="_blank">Elgendy Store</a>
-  </div>
+<script>
+  // فتح المودال وإدخال بيانات الكارت المشروح
+  const modal = document.getElementById('shareModal');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalLink = document.getElementById('modalLink');
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Snapchat" />
-    <a href="https://www.snapchat.com/add/xttrokman" target="_blank">Snapchat</a>
-  </div>
+  // أيقونات داخل المودال
+  const mWa = document.getElementById('m-wa');
+  const mOpen = document.getElementById('m-open');
+  const mX = document.getElementById('m-x');
+  const mFb = document.getElementById('m-fb');
+  const mTg = document.getElementById('m-tg');
+  const mCopy = document.getElementById('m-copy');
+  const mShare = document.getElementById('m-share');
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/6512/6512898.png" alt="Store" />
-    <a href="https://cmh0hmyou04ub01jeg74b878a.wuiltstore.com" target="_blank">المتجر الإلكتروني</a>
-  </div>
+  // عندما تضغط على أي زر ثلاث نقاط
+  document.querySelectorAll('.ellipsis-btn').forEach(btn => {
+    btn.addEventListener('click', (e)=>{
+      const card = e.currentTarget.closest('.card');
+      const a = card.querySelector('.card-link');
+      const title = a.textContent.trim() || 'Elgendy Store';
+      const href = a.href || location.href;
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Menu" />
-    <a href="https://drive.google.com/open?id=10div3p0FdYQbfm2aRMf1F7jmgIJ49bRT&usp=drive_fs" target="_blank">قائمة الخدمات</a>
-  </div>
+      // تحديث المودال
+      modalTitle.textContent = title;
+      modalLink.textContent = href;
+      modal.setAttribute('aria-hidden','false');
+      modal.classList.add('active');
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Location" />
-    <a href="https://maps.app.goo.gl/rUyZsf9YKWBiQnGz9?g_st=awb" target="_blank">الموقع على الخريطة</a>
-  </div>
+      // إعداد روابط أيقونات (تستخدم href)
+      // واتساب يفتح رسالة مع رابط
+      mWa.href = 'https://wa.me/?text=' + encodeURIComponent(title + ' - ' + href);
+      mOpen.href = href;
+      mX.href = 'https://x.com/intent/tweet?text=' + encodeURIComponent(title + ' - ' + href);
+      mFb.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(href);
+      mTg.href = 'https://t.me/share/url?url=' + encodeURIComponent(href) + '&text=' + encodeURIComponent(title);
+    });
+  });
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/145/145807.png" alt="LinkedIn" />
-    <a href="https://www.linkedin.com/in/mohamed-ehab-13aa05377" target="_blank">LinkedIn</a>
-  </div>
+  // اغلاق المودال
+  document.querySelector('.modal-close').addEventListener('click', closeModal);
+  modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', (e)=> { if(e.key === 'Escape') closeModal(); });
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png" alt="X" />
-    <a href="https://x.com/Killua47277601" target="_blank">(Twitter (X</a>
-  </div>
+  function closeModal(){
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden','true');
+  }
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" />
-    <a href="https://youtube.com/@trokman12709" target="_blank">YouTube</a>
-  </div>
+  // نسخ الرابط
+  mCopy.addEventListener('click', function(e){
+    e.preventDefault();
+    const txt = modalLink.textContent || location.href;
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(txt).then(()=>{ alert('تم نسخ الرابط'); closeModal(); });
+    } else {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = txt; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy'); ta.remove();
+      alert('تم نسخ الرابط'); closeModal();
+    }
+  });
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png" alt="Instagram" />
-    <a href="https://www.instagram.com/killuazoldyck.a555" target="_blank">Instagram</a>
-  </div>
+  // مشاركة نظامية
+  mShare.addEventListener('click', function(e){
+    e.preventDefault();
+    const txt = modalTitle.textContent + ' - ' + modalLink.textContent;
+    if(navigator.share){
+      navigator.share({title: modalTitle.textContent, text: txt, url: modalLink.textContent}).catch(()=>{});
+    } else {
+      alert('خاصية المشاركة غير متاحة في متصفحك. يمكنك نسخ الرابط بدلاً من ذلك.');
+    }
+    closeModal();
+  });
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" />
-    <a href="https://t.me/Trokman2" target="_blank">Telegram</a>
-  </div>
+  // تحسين السحب الأفقي للمجموعة (لمس)
+  const iconsRow = document.querySelector('.modal-icons-row');
+  let isDown=false, startX=0, scrollLeft=0;
+  iconsRow.addEventListener('touchstart', (e)=>{ isDown=true; startX = e.touches[0].pageX - iconsRow.offsetLeft; scrollLeft = iconsRow.scrollLeft; });
+  iconsRow.addEventListener('touchend', ()=> isDown=false);
+  iconsRow.addEventListener('touchmove', (e)=>{ if(!isDown) return; const x = e.touches[0].pageX - iconsRow.offsetLeft; const walk = (x - startX) * 1.1; iconsRow.scrollLeft = scrollLeft - walk; });
 
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" />
-    <a href="https://www.tiktok.com/@trokman1272009" target="_blank">TikTok</a>
-  </div>
-
-  <div class="card">
-    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" />
-    <a href="mailto:killuazoldyck1272009@gmail.com" target="_blank">Email</a>
-  </div>
+  // لمنع فتح روابط داخلية بدون قصد داخل المودال (الروابط المخصصة تفتح في نافذة جديدة)
+  document.querySelectorAll('.modal-icon-link').forEach(link=>{
+    link.addEventListener('click', (e)=>{
+      // بعض الأيقونات قد تكون # (نسخ) لا نريد تغيير شيء
+      if(link.getAttribute('href') === '#') e.preventDefault();
+    });
+  });
+</script>
 
 </body>
 </html>
